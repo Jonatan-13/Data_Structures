@@ -8,12 +8,13 @@ export default class Stack extends AbstractList {
 
     push(value) {
         let node = new this.nodeConstructor(value);
-        if (!this.isEmpty()) {
-            this.head = node;
-            this.tail = node;
+        if (this.isEmpty()) {
+            this._head = node;
+            this._tail = node;
         } else {
             this.tail.next = node;
-            this.tail = node;
+            node.previous = this.tail; // ----------
+            this._tail = node;
         }
         this._length++;
     }
@@ -23,12 +24,12 @@ export default class Stack extends AbstractList {
             if (this.length === 1) {
                 this.clear();
             } else {
-                this.tail = this.tail.previous;
+                this._tail = this.tail.previous;
                 this.tail.next = null;
                 this._length--;
             }
         } else {
-            throw new Error("Cannot shfit if the linked list is empty.");
+            throw new Error("Cannot pop if the linked list is empty.");
         }
     }
 }

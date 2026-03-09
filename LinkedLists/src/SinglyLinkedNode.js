@@ -4,6 +4,10 @@ export default class SinglyLinkedNode {
         this._next = null;
     }
 
+    toString() {
+        return `Node(${this.value}) > `;
+    }
+
     get value() {
         return this._value;
     }
@@ -15,7 +19,7 @@ export default class SinglyLinkedNode {
         return this._next;
     }
     set next(newNext) {
-        if (!(newNext instanceof this.constructor) && newNext !== null) {
+        if (newNext !== null && (newNext?.constructor !== this.constructor)) {
             throw new Error(`The value should be instance of ${this.constructor.name} or should be null.`);
         }
         this._next = newNext;

@@ -6,13 +6,17 @@ export default class DoublyLinkedNode extends SinglyLinkedNode {
         this._previous = null;
     }
 
+    toString() {
+        return `< Node(${this.value}) >`;
+    }
+
     get previous() {
         return this._previous;
     }
     set previous(newPrevious) {
-        if (!(newPrevious instanceof this.constructor) && newPrevious !== null) {
+        if (newPrevious !== null && (newPrevious?.constructor !== this.constructor)) {
             throw new Error(`The value should be instance of ${this.constructor.name} or should be null.`);
         }
-        this._next = newPrevious;
+        this._previous = newPrevious;
     }
 }

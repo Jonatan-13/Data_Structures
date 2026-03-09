@@ -8,12 +8,13 @@ export default class Queue extends AbstractList {
 
     enqueue(value) {
         let node = new this.nodeConstructor(value);
-        if (!this.isEmpty()) {
-            this.head = node;
-            this.tail = node;
+        if (this.isEmpty()) {
+            this._head = node;
+            this._tail = node;
         } else {
             this.tail.next = node;
-            this.tail = node;
+            node.previous = this.tail; // ----------
+            this._tail = node;
         }
         this._length++;
     }
@@ -23,7 +24,8 @@ export default class Queue extends AbstractList {
             if (this.length === 1) {
                 this.clear();
             } else {
-                this.head = this.head.next;
+                this._head = this.head.next;
+                this.head.previous = null;
                 this._length--;
             }
         } else {

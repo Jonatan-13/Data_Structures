@@ -7,24 +7,24 @@ export default class LinkedList extends AbstractList {
 
     push(value) {
         let node = new this.nodeConstructor(value);
-        if (!this.isEmpty()) {
-            this.head = node;
-            this.tail = node;
+        if (this.isEmpty()) {
+            this._head = node;
+            this._tail = node;
         } else {
             this.tail.next = node;
-            this.tail = node;
+            this._tail = node;
         }
         this._length++;
     }
 
     unshift(value) {
         let node = new this.nodeConstructor(value);
-        if (!this.isEmpty()) {
-            this.head = node;
-            this.tail = node;
+        if (this.isEmpty()) {
+            this._head = node;
+            this._tail = node;
         } else {
             node.next = this.head;
-            this.head = node;
+            this._head = node;
         }
         this._length++;
     }
@@ -34,7 +34,7 @@ export default class LinkedList extends AbstractList {
             if (this.length === 1) {
                 this.clear();
             } else {
-                this.head = this.head.next;
+                this._head = this.head.next;
                 this._length--;
             }
         } else {
@@ -51,7 +51,7 @@ export default class LinkedList extends AbstractList {
                 while (newTail.next !== this.tail) {
                     newTail = newTail.next;
                 }
-                this.tail = newTail;
+                this._tail = newTail;
                 this.tail.next = null;
                 this._length--;
             }
@@ -74,5 +74,19 @@ export default class LinkedList extends AbstractList {
         } else {
             throw new Error("The value must belong to the linked list in order to be deleted.");
         }
+    }
+
+    extend(list) {
+        if (list?.constructor !== this.constructor) {
+            throw new Error(`The list must be an instance of ${this.constructor.name}.`);   
+        }
+        if (this.isEmpty()) {
+            this._head = list.head;
+            this._tail = list.tail;
+        } else if (list.tail !== null) {
+            this.tail.next = list.head;
+            this._tail = list.tail;
+        }
+        this._length += list.length;
     }
 }

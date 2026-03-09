@@ -18,23 +18,18 @@ A singly linked list manages a sequence of nodes where each node only knows the 
 ## Insertion
 - Add a new element at the **beginning**.
 - Add a new element at the **end**.
-- Insert a new element **after a specific node**.
-- Insert a new element at a **specific position/index**.
 
 ## Removal
 - Remove the **first element**.
 - Remove the **last element**.
 - Remove a **specific element by value**.
-- Remove an element at a **specific position**.
 
 ## Access
 - Retrieve the **first element**.
 - Retrieve the **last element**.
-- Retrieve an element at a **specific position**.
 - Check whether a **value exists in the list**.
 
 ## Traversal / Utilities
-- Traverse the list from **start to end**.
 - Convert the list into a **readable representation**.
 - Check if the list is **empty**.
 - Clear the entire list.
@@ -54,25 +49,19 @@ A doubly linked list manages nodes that know both the **next** and **previous** 
 ## Insertion
 - Add a new element at the **beginning**.
 - Add a new element at the **end**.
-- Insert an element **before a given node**.
-- Insert an element **after a given node**.
-- Insert an element at a **specific position**.
 
 ## Removal
 - Remove the **first element**.
 - Remove the **last element**.
 - Remove a **specific node**.
-- Remove an element at a **specific position**.
 
 ## Access
 - Retrieve the **first element**.
 - Retrieve the **last element**.
-- Retrieve an element by **position**.
 - Check if a **value exists**.
 
 ## Traversal / Utilities
-- Traverse **forward**.
-- Traverse **backward**.
+- Convert the list into a **readable representation**.
 - Check if the list is **empty**.
 - Clear the list.
 
@@ -123,8 +112,8 @@ A queue follows the **FIFO principle (First In, First Out)**.
 - Determine the **number of elements**.
 
 ## Utilities
+- Convert the queue into a **readable representation**.
 - Clear the queue.
-- Display or traverse the elements in order.
 
 ---
 
@@ -142,8 +131,8 @@ A stack follows the **LIFO principle (Last In, First Out)**.
 - Determine the **number of elements**.
 
 ## Utilities
+- Convert the list into a **readable representation**.
 - Clear the stack.
-- Display or traverse the elements from **top to bottom**.
 
 ---
 

@@ -13,6 +13,16 @@ export default class AbstractList {
         this._nodeConstructor = nodeConstructor;
     }
 
+    toString() {
+        let repr = "";
+        let node = this.head;
+        while (node != null) {
+            repr += node;
+            node = node.next;
+        }
+        return repr;
+    }
+
     get nodeConstructor() {
         return this._nodeConstructor;
     }
@@ -71,19 +81,9 @@ export default class AbstractList {
         }
     }
 
-    extend(list) {
-        if (list instanceof this.constructor) {
-            this.tail.next = list.head;
-            this.tail = list.tail;
-            this._length += list.length;
-        } else {
-            throw new Error(`The list must be an instance of ${this.constructor}.`);
-        }
-    }
-
     clear() {
-        this.head = null;
-        this.tail = null;
+        this._head = null;
+        this._tail = null;
         this._length = 0;
     }
 }
