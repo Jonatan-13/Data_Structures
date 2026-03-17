@@ -7,9 +7,11 @@ export default class Queue {
 
     toString() {
         let values = [];
-        let node = this.head;
+        let node = this._list.head;
         while (node != null) {
-            values.push(node.value);
+            let value = node.value;
+            value = (value == null) ? "null" : (value == undefined) ? "undefined" : value;
+            values.push(value);
             node = node.next;
         }
         return `Queue(${values.join(", ")})`;
@@ -21,8 +23,11 @@ export default class Queue {
 
     peek() {
         let head = this._list.head;
-        if (head != null) head = head.value;
-        return head;
+        if (head != null) {
+            return head.value;
+        } else {
+            throw new Error("Cannot peek if the list is empty");
+        }
     }
 
     isEmpty() {
@@ -48,9 +53,9 @@ export default class Queue {
 
     dequeue() {
         if (!this.isEmpty()) {
-            let deletedNode = this.peek();
+            let deletedValue = this.peek();
             this._list.shift();
-            return deletedNode;
+            return deletedValue;
         } else {
             throw new Error("Cannot dequeue if the queue is empty.");
         }

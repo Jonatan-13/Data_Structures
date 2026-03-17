@@ -1,8 +1,12 @@
 import { expect, test, it, describe, beforeEach } from 'vitest';
-import Stack from '../src/Stack';
+import {Stack} from '../src/DataStructures';
 
 function checkStates({ obj, top, size, empty, string }) {
-    expect(String(obj.peek())).toBe(top);
+    try {
+        expect(String(obj.peek())).toBe(top);
+    } catch (e) {
+        expect(top).toBe("Error");
+    }
     expect(obj.size).toBe(size);
     expect(obj.isEmpty()).toBe(empty);
     expect(String(obj)).toBe(string);
@@ -15,10 +19,25 @@ beforeEach(() => {
 });
 
 describe("Constructor", () => {
-    test("should create empty linked list", () => {
+    test("should create empty stack", () => {
         checkStates({
             obj: stack,
-            top: "null",
+            top: "Error",
+            size: 0,
+            empty: true,
+            string: "Stack()"
+        });
+    });
+});
+
+describe("Peek", () => {
+    it("should throw an error if the stack is empty", () => {
+        expect(() => {
+            stack.peek();
+        }).toThrow();
+        checkStates({
+            obj: stack,
+            top: "Error",
             size: 0,
             empty: true,
             string: "Stack()"
@@ -27,7 +46,7 @@ describe("Constructor", () => {
 });
 
 describe("Push", () => {
-    it("should push if list is empty", () => {
+    it("should push if the stack is empty", () => {
         stack.push(5);
         checkStates({
             obj: stack,
@@ -37,13 +56,13 @@ describe("Push", () => {
             string: "Stack(5)"
         });
     });
-    it("should push if list is not empty", () => {
+    it("should push if the stack is not empty", () => {
         stack.push(7);
         stack.push(true);
         stack.push("ABC")
         checkStates({
             obj: stack,
-            top: "7",
+            top: "ABC",
             size: 3,
             empty: false,
             string: "Stack(7, true, ABC)"
@@ -52,37 +71,37 @@ describe("Push", () => {
 });
 
 describe("Pop", () => {
-    it("should throw an error if the list is empty", () => {
+    it("should throw an error if the stack is empty", () => {
         expect(() => {
             stack.pop();
         }).toThrow();
         checkStates({
             obj: stack,
-            top: "null",
+            top: "Error",
             size: 0,
             empty: true,
             string: "Stack()"
         });
     });
-    it("should leave an empty list if the list has one node", () => {
+    it("should leave an empty stack if the stack has one node", () => {
         stack.push(5);
         stack.pop();
         checkStates({
             obj: stack,
-            top: "null",
+            top: "Error",
             size: 0,
             empty: true,
             string: "Stack()"
         });
     });
-    it("should pop if the list has more than one node", () => {
+    it("should pop if the stack has more than one node", () => {
         stack.push(null);
         stack.push(false);
         stack.push(8);
         stack.pop();
         checkStates({
             obj: stack,
-            top: "null",
+            top: "false",
             size: 2,
             empty: false,
             string: "Stack(null, false)"
@@ -91,24 +110,24 @@ describe("Pop", () => {
 });
 
 describe("Clear", () => {
-    it("should clear if the list is empty", () => {
+    it("should clear if the stack is empty", () => {
         stack.clear();
         checkStates({
             obj: stack,
-            top: "null",
+            top: "Error",
             size: 0,
             empty: true,
             string: "Stack()"
         });
     });
-    it("should clear if the list is not empty", () => {
+    it("should clear if the stack is not empty", () => {
         stack.push(8);
         stack.push(true);
         stack.push(NaN);
         stack.clear();
         checkStates({
             obj: stack,
-            top: "null",
+            top: "Error",
             size: 0,
             empty: true,
             string: "Stack()"

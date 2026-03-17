@@ -7,9 +7,11 @@ export default class Stack {
 
     toString() {
         let values = [];
-        let node = this.head;
+        let node = this._list.head;
         while (node != null) {
-            values.push(node.value);
+            let value = node.value;
+            value = (value == null) ? "null" : (value == undefined) ? "undefined" : value;
+            values.push(value);
             node = node.next;
         }
         return `Stack(${values.join(", ")})`;
@@ -21,8 +23,11 @@ export default class Stack {
 
     peek() {
         let tail = this._list.tail;
-        if (tail != null) tail = tail.value;
-        return tail;
+        if (tail != null) {
+            return tail.value;
+        } else {
+            throw new Error("Cannot peek if the list is empty");
+        }
     }
 
     isEmpty() {

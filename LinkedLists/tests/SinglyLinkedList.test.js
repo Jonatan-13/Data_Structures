@@ -1,7 +1,5 @@
 import { expect, test, it, describe, beforeEach } from 'vitest';
-import SinglyLinkedNode from '../src/SinglyLinkedNode.js';
-import SinglyLinkedList from "../src/SinglyLinkedList.js";
-import DoublyLinkedList from "../src/DoublyLinkedList.js";
+import {SinglyLinkedNode, SinglyLinkedList, DoublyLinkedList} from '../src/DataStructures';
 
 function checkStates({ obj, head, tail, length, empty, string }) {
     expect(String(obj.head)).toBe(head);

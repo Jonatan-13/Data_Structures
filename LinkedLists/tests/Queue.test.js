@@ -1,9 +1,12 @@
 import { expect, test, it, describe, beforeEach } from 'vitest';
-import Queue from '../src/Queue';
-import DoublyLinkedList from '../src/DoublyLinkedList';
+import {Queue, DoublyLinkedList} from '../src/DataStructures';
 
 function checkStates({ obj, front, size, empty, string }) {
-    expect(String(obj.peek())).toBe(front);
+    try {
+        expect(String(obj.peek())).toBe(front);
+    } catch (e) {
+        expect(front).toBe("Error");
+    }
     expect(obj.size).toBe(size);
     expect(obj.isEmpty()).toBe(empty);
     expect(String(obj)).toBe(string);
@@ -16,10 +19,25 @@ beforeEach(() => {
 });
 
 describe("Constructor", () => {
-    test("should create empty linked list", () => {
+    test("should create empty queue", () => {
         checkStates({
             obj: queue,
-            front: "null",
+            front: "Error",
+            size: 0,
+            empty: true,
+            string: "Queue()"
+        });
+    });
+});
+
+describe("Peek", () => {
+    it("should throw an error if the queue is empty", () => {
+        expect(() => {
+            queue.peek();
+        }).toThrow();
+        checkStates({
+            obj: queue,
+            front: "Error",
             size: 0,
             empty: true,
             string: "Queue()"
@@ -28,7 +46,7 @@ describe("Constructor", () => {
 });
 
 describe("Enqueue", () => {
-    it("should push if list is empty", () => {
+    it("should enqueue if the queue is empty", () => {
         queue.enqueue(5);
         checkStates({
             obj: queue,
@@ -38,7 +56,7 @@ describe("Enqueue", () => {
             string: "Queue(5)"
         });
     });
-    it("should push if list is not empty", () => {
+    it("should enqueue if the queue is not empty", () => {
         queue.enqueue(7);
         queue.enqueue(true);
         queue.enqueue("ABC")
@@ -53,30 +71,30 @@ describe("Enqueue", () => {
 });
 
 describe("Dequeue", () => {
-    it("should throw an error if the list is empty", () => {
+    it("should throw an error if the queue is empty", () => {
         expect(() => {
             queue.dequeue();
         }).toThrow();
         checkStates({
             obj: queue,
-            front: "null",
+            front: "Error",
             size: 0,
             empty: true,
             string: "Queue()"
         });
     });
-    it("should leave an empty list if the list has one node", () => {
+    it("should leave an empty queue if the queue has one node", () => {
         queue.enqueue(4);
         queue.dequeue();
         checkStates({
             obj: queue,
-            front: "null",
+            front: "Error",
             size: 0,
             empty: true,
             string: "Queue()"
         });
     });
-    it("should shift if the list has more than one node", () => {
+    it("should dequeue if the queue has more than one node", () => {
         queue.enqueue(7);
         queue.enqueue(true);
         queue.dequeue();
@@ -91,23 +109,23 @@ describe("Dequeue", () => {
 });
 
 describe("Extend", () => {
-    it("should throw an error if the list is not a singly linked list", () => {
+    it("should throw an error trying to extend anything that is not a queue", () => {
         expect(() => {
             queue.extend(new DoublyLinkedList());
         }).toThrow();
         checkStates({
             obj: queue,
-            front: "null",
+            front: "Error",
             size: 0,
             empty: true,
             string: "Queue()"
         });
     });
-    it("should extend if this is an empty list", () => {
-        let newqueue = new SinglyLinkedList();
-        newqueue.enqueue(8);
-        newqueue.enqueue(true);
-        queue.extend(newqueue);
+    it("should extend if this is empty", () => {
+        let newQueue = new Queue();
+        newQueue.enqueue(8);
+        newQueue.enqueue(true);
+        queue.extend(newQueue);
         checkStates({
             obj: queue,
             front: "8",
@@ -116,10 +134,10 @@ describe("Extend", () => {
             string: "Queue(8, true)"
         });
     });
-    it("should extend an empty list", () => {
+    it("should extend an empty queue", () => {
         queue.enqueue(8);
         queue.enqueue(true);
-        queue.extend(new SinglyLinkedList());
+        queue.extend(new Queue());
         checkStates({
             obj: queue,
             front: "8",
@@ -128,8 +146,8 @@ describe("Extend", () => {
             string: "Queue(8, true)"
         });
     });
-    it("should extend a non empty list", () => {
-        let newqueue = new SinglyLinkedList();
+    it("should extend a non empty queue", () => {
+        let newqueue = new Queue();
         newqueue.enqueue(8);
         newqueue.enqueue(true);
         queue.enqueue(0);
@@ -146,24 +164,24 @@ describe("Extend", () => {
 });
 
 describe("Clear", () => {
-    it("should clear if the list is empty", () => {
+    it("should clear if the queue is empty", () => {
         queue.clear();
         checkStates({
             obj: queue,
-            front: "null",
+            front: "Error",
             size: 0,
             empty: true,
             string: "Queue()"
         });
     });
-    it("should clear if the list is not empty", () => {
+    it("should clear if the queue is not empty", () => {
         queue.enqueue(8);
         queue.enqueue(true);
         queue.enqueue(NaN);
         queue.clear();
         checkStates({
             obj: queue,
-            front: "null",
+            front: "Error",
             size: 0,
             empty: true,
             string: "Queue()"
