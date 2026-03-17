@@ -1,18 +1,18 @@
 import { expect, test, it, describe, beforeEach } from 'vitest';
 import {Queue, DoublyLinkedList} from '../src/DataStructures';
 
-function checkStates({ obj, front, size, empty, string }) {
+let queue;
+
+function checkStates({ front, size, empty, string }) {
     try {
-        expect(String(obj.peek())).toBe(front);
+        expect(String(queue.peek())).toBe(front);
     } catch (e) {
         expect(front).toBe("Error");
     }
-    expect(obj.size).toBe(size);
-    expect(obj.isEmpty()).toBe(empty);
-    expect(String(obj)).toBe(string);
+    expect(queue.size).toBe(size);
+    expect(queue.isEmpty()).toBe(empty);
+    expect(String(queue)).toBe(string);
 }
-
-let queue;
 
 beforeEach(() => {
     queue = new Queue();
@@ -21,7 +21,6 @@ beforeEach(() => {
 describe("Constructor", () => {
     test("should create empty queue", () => {
         checkStates({
-            obj: queue,
             front: "Error",
             size: 0,
             empty: true,
@@ -36,7 +35,6 @@ describe("Peek", () => {
             queue.peek();
         }).toThrow();
         checkStates({
-            obj: queue,
             front: "Error",
             size: 0,
             empty: true,
@@ -49,7 +47,6 @@ describe("Enqueue", () => {
     it("should enqueue if the queue is empty", () => {
         queue.enqueue(5);
         checkStates({
-            obj: queue,
             front: "5",
             size: 1,
             empty: false,
@@ -61,7 +58,6 @@ describe("Enqueue", () => {
         queue.enqueue(true);
         queue.enqueue("ABC")
         checkStates({
-            obj: queue,
             front: "7",
             size: 3,
             empty: false,
@@ -76,7 +72,6 @@ describe("Dequeue", () => {
             queue.dequeue();
         }).toThrow();
         checkStates({
-            obj: queue,
             front: "Error",
             size: 0,
             empty: true,
@@ -87,7 +82,6 @@ describe("Dequeue", () => {
         queue.enqueue(4);
         queue.dequeue();
         checkStates({
-            obj: queue,
             front: "Error",
             size: 0,
             empty: true,
@@ -99,7 +93,6 @@ describe("Dequeue", () => {
         queue.enqueue(true);
         queue.dequeue();
         checkStates({
-            obj: queue,
             front: "true",
             size: 1,
             empty: false,
@@ -114,7 +107,6 @@ describe("Extend", () => {
             queue.extend(new DoublyLinkedList());
         }).toThrow();
         checkStates({
-            obj: queue,
             front: "Error",
             size: 0,
             empty: true,
@@ -127,7 +119,6 @@ describe("Extend", () => {
         newQueue.enqueue(true);
         queue.extend(newQueue);
         checkStates({
-            obj: queue,
             front: "8",
             size: 2,
             empty: false,
@@ -139,7 +130,6 @@ describe("Extend", () => {
         queue.enqueue(true);
         queue.extend(new Queue());
         checkStates({
-            obj: queue,
             front: "8",
             size: 2,
             empty: false,
@@ -154,7 +144,6 @@ describe("Extend", () => {
         queue.enqueue(null);
         queue.extend(newqueue);
         checkStates({
-            obj: queue,
             front: "0",
             size: 4,
             empty: false,
@@ -167,7 +156,6 @@ describe("Clear", () => {
     it("should clear if the queue is empty", () => {
         queue.clear();
         checkStates({
-            obj: queue,
             front: "Error",
             size: 0,
             empty: true,
@@ -180,7 +168,6 @@ describe("Clear", () => {
         queue.enqueue(NaN);
         queue.clear();
         checkStates({
-            obj: queue,
             front: "Error",
             size: 0,
             empty: true,

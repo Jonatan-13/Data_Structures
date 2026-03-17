@@ -1,18 +1,18 @@
 import { expect, test, it, describe, beforeEach } from 'vitest';
 import {Stack} from '../src/DataStructures';
 
-function checkStates({ obj, top, size, empty, string }) {
+let stack;
+
+function checkStates({ top, size, empty, string }) {
     try {
-        expect(String(obj.peek())).toBe(top);
+        expect(String(stack.peek())).toBe(top);
     } catch (e) {
         expect(top).toBe("Error");
     }
-    expect(obj.size).toBe(size);
-    expect(obj.isEmpty()).toBe(empty);
-    expect(String(obj)).toBe(string);
+    expect(stack.size).toBe(size);
+    expect(stack.isEmpty()).toBe(empty);
+    expect(String(stack)).toBe(string);
 }
-
-let stack;
 
 beforeEach(() => {
     stack = new Stack();
@@ -21,7 +21,6 @@ beforeEach(() => {
 describe("Constructor", () => {
     test("should create empty stack", () => {
         checkStates({
-            obj: stack,
             top: "Error",
             size: 0,
             empty: true,
@@ -36,7 +35,6 @@ describe("Peek", () => {
             stack.peek();
         }).toThrow();
         checkStates({
-            obj: stack,
             top: "Error",
             size: 0,
             empty: true,
@@ -49,7 +47,6 @@ describe("Push", () => {
     it("should push if the stack is empty", () => {
         stack.push(5);
         checkStates({
-            obj: stack,
             top: "5",
             size: 1,
             empty: false,
@@ -61,7 +58,6 @@ describe("Push", () => {
         stack.push(true);
         stack.push("ABC")
         checkStates({
-            obj: stack,
             top: "ABC",
             size: 3,
             empty: false,
@@ -76,7 +72,6 @@ describe("Pop", () => {
             stack.pop();
         }).toThrow();
         checkStates({
-            obj: stack,
             top: "Error",
             size: 0,
             empty: true,
@@ -87,7 +82,6 @@ describe("Pop", () => {
         stack.push(5);
         stack.pop();
         checkStates({
-            obj: stack,
             top: "Error",
             size: 0,
             empty: true,
@@ -100,7 +94,6 @@ describe("Pop", () => {
         stack.push(8);
         stack.pop();
         checkStates({
-            obj: stack,
             top: "false",
             size: 2,
             empty: false,
@@ -113,7 +106,6 @@ describe("Clear", () => {
     it("should clear if the stack is empty", () => {
         stack.clear();
         checkStates({
-            obj: stack,
             top: "Error",
             size: 0,
             empty: true,
@@ -126,7 +118,6 @@ describe("Clear", () => {
         stack.push(NaN);
         stack.clear();
         checkStates({
-            obj: stack,
             top: "Error",
             size: 0,
             empty: true,

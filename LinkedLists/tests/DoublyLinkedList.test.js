@@ -1,16 +1,18 @@
 import { expect, test, it, describe, beforeEach } from 'vitest';
 import {DoublyLinkedList, SinglyLinkedNode, SinglyLinkedList} from '../src/DataStructures';
 
-function checkStates({ obj, head, tail, length, empty, string }) {
-    expect(String(obj.head)).toBe(head);
-    expect(String(obj.tail)).toBe(tail);
-    expect(obj.length).toBe(length);
-    expect(obj.isEmpty()).toBe(empty);
-    expect(String(obj)).toBe(string);
-    expect(rightToLeftString(obj)).toBe(leftToRightString(obj));
+let dll;
+
+function checkStates({ head, tail, length, empty, string }) {
+    expect(String(dll.head)).toBe(head);
+    expect(String(dll.tail)).toBe(tail);
+    expect(dll.length).toBe(length);
+    expect(dll.isEmpty()).toBe(empty);
+    expect(String(dll)).toBe(string);
+    expect(rightToLeftString()).toBe(leftToRightString());
 }
 
-function leftToRightString(dll) {
+function leftToRightString() {
     let repr = "";
     let node = dll.head;
     while (node != null) {
@@ -19,7 +21,7 @@ function leftToRightString(dll) {
     }
     return repr;
 }
-function rightToLeftString(dll) {
+function rightToLeftString() {
     let repr = "";
     let node = dll.tail;
     while (node != null) {
@@ -29,8 +31,6 @@ function rightToLeftString(dll) {
     return repr;
 }
 
-let dll;
-
 beforeEach(() => {
     dll = new DoublyLinkedList();
 });
@@ -39,7 +39,6 @@ describe("Constructor", () => {
     test("should create empty linked list", () => {
         let dll = new DoublyLinkedList();
         checkStates({
-            obj: dll,
             head: "null",
             tail: "null",
             length: 0,
@@ -53,7 +52,6 @@ describe("Push", () => {
     it("should push if list is empty", () => {
         dll.push(5);
         checkStates({
-            obj: dll,
             head: "< Node(5) >",
             tail: "< Node(5) >",
             length: 1,
@@ -66,7 +64,6 @@ describe("Push", () => {
         dll.push(true);
         dll.push("ABC");
         checkStates({
-            obj: dll,
             head: "< Node(7) >",
             tail: "< Node(ABC) >",
             length: 3,
@@ -82,7 +79,6 @@ describe("Shift", () => {
             dll.shift();
         }).toThrow();
         checkStates({
-            obj: dll,
             head: "null",
             tail: "null",
             length: 0,
@@ -94,7 +90,6 @@ describe("Shift", () => {
         dll.push(4);
         dll.shift();
         checkStates({
-            obj: dll,
             head: "null",
             tail: "null",
             length: 0,
@@ -107,7 +102,6 @@ describe("Shift", () => {
         dll.push(true);
         dll.shift();
         checkStates({
-            obj: dll,
             head: "< Node(true) >",
             tail: "< Node(true) >",
             length: 1,
@@ -121,7 +115,6 @@ describe("Unshift", () => {
     it("should unshift if the list is empty", () => {
         dll.unshift(true);
         checkStates({
-            obj: dll,
             head: "< Node(true) >",
             tail: "< Node(true) >",
             length: 1,
@@ -134,7 +127,6 @@ describe("Unshift", () => {
         dll.push(8);
         dll.unshift(new SinglyLinkedNode(1));
         checkStates({
-            obj: dll,
             head: "< Node(Node(1) > ) >",
             tail: "< Node(8) >",
             length: 3,
@@ -150,7 +142,6 @@ describe("Pop", () => {
             dll.pop();
         }).toThrow();
         checkStates({
-            obj: dll,
             head: "null",
             tail: "null",
             length: 0,
@@ -162,7 +153,6 @@ describe("Pop", () => {
         dll.push(5);
         dll.pop();
         checkStates({
-            obj: dll,
             head: "null",
             tail: "null",
             length: 0,
@@ -176,7 +166,6 @@ describe("Pop", () => {
         dll.unshift(null);
         dll.pop();
         checkStates({
-            obj: dll,
             head: "< Node(null) >",
             tail: "< Node(false) >",
             length: 2,
@@ -199,7 +188,6 @@ describe("Delete", () => {
             dll.delete(4);
         }).toThrow();
         checkStates({
-            obj: dll,
             head: "null",
             tail: "null",
             length: 0,
@@ -212,7 +200,6 @@ describe("Delete", () => {
             dll.delete(true);
         }).toThrow();
         checkStates({
-            obj: dll,
             head: "< Node(null) >",
             tail: "< Node(undefined) >",
             length: 3,
@@ -223,7 +210,6 @@ describe("Delete", () => {
     it("should delete the head", () => {
         dll.delete(null);
         checkStates({
-            obj: dll,
             head: "< Node(false) >",
             tail: "< Node(undefined) >",
             length: 2,
@@ -234,7 +220,6 @@ describe("Delete", () => {
     it("should delete the tail", () => {
         dll.delete(undefined);
         checkStates({
-            obj: dll,
             head: "< Node(null) >",
             tail: "< Node(false) >",
             length: 2,
@@ -245,7 +230,6 @@ describe("Delete", () => {
     it("should delete a node different from head and tail", () => {
         dll.delete(false);
         checkStates({
-            obj: dll,
             head: "< Node(null) >",
             tail: "< Node(undefined) >",
             length: 2,
@@ -322,7 +306,6 @@ describe("Update", () => {
             dll.update(8, true);
         }).toThrow();
         checkStates({
-            obj: dll,
             head: "null",
             tail: "null",
             length: 0,
@@ -335,7 +318,6 @@ describe("Update", () => {
             dll.update(8, true);
         }).toThrow();
         checkStates({
-            obj: dll,
             head: "< Node(10) >",
             tail: "< Node(false) >",
             length: 3,
@@ -346,7 +328,6 @@ describe("Update", () => {
     it("should update the head", () => {
         dll.update(10, false)
         checkStates({
-            obj: dll,
             head: "< Node(false) >",
             tail: "< Node(false) >",
             length: 3,
@@ -357,7 +338,6 @@ describe("Update", () => {
     it("should update the tail", () => {
         dll.update(false, "HI");
         checkStates({
-            obj: dll,
             head: "< Node(10) >",
             tail: "< Node(HI) >",
             length: 3,
@@ -368,7 +348,6 @@ describe("Update", () => {
     it("should update if the old value is not in the head or tail", () => {
         dll.update(null, 321)
         checkStates({
-            obj: dll,
             head: "< Node(10) >",
             tail: "< Node(false) >",
             length: 3,
@@ -384,7 +363,6 @@ describe("Extend", () => {
             dll.extend(new SinglyLinkedList());
         }).toThrow();
         checkStates({
-            obj: dll,
             head: "null",
             tail: "null",
             length: 0,
@@ -398,7 +376,6 @@ describe("Extend", () => {
         newdll.push(true);
         dll.extend(newdll);
         checkStates({
-            obj: dll,
             head: "< Node(8) >",
             tail: "< Node(true) >",
             length: 2,
@@ -411,7 +388,6 @@ describe("Extend", () => {
         dll.push(true);
         dll.extend(new DoublyLinkedList());
         checkStates({
-            obj: dll,
             head: "< Node(8) >",
             tail: "< Node(true) >",
             length: 2,
@@ -427,7 +403,6 @@ describe("Extend", () => {
         dll.push(null);
         dll.extend(newdll);
         checkStates({
-            obj: dll,
             head: "< Node(0) >",
             tail: "< Node(true) >",
             length: 4,
@@ -441,7 +416,6 @@ describe("Clear", () => {
     it("should clear if the list is empty", () => {
         dll.clear();
         checkStates({
-            obj: dll,
             head: "null",
             tail: "null",
             length: 0,
@@ -455,7 +429,6 @@ describe("Clear", () => {
         dll.push(NaN);
         dll.clear();
         checkStates({
-            obj: dll,
             head: "null",
             tail: "null",
             length: 0,

@@ -1,15 +1,15 @@
 import { expect, test, it, describe, beforeEach } from 'vitest';
 import {SinglyLinkedNode, SinglyLinkedList, DoublyLinkedList} from '../src/DataStructures';
 
-function checkStates({ obj, head, tail, length, empty, string }) {
-    expect(String(obj.head)).toBe(head);
-    expect(String(obj.tail)).toBe(tail);
-    expect(obj.length).toBe(length);
-    expect(obj.isEmpty()).toBe(empty);
-    expect(String(obj)).toBe(string);
-}
-
 let sll;
+
+function checkStates({ head, tail, length, empty, string }) {
+    expect(String(sll.head)).toBe(head);
+    expect(String(sll.tail)).toBe(tail);
+    expect(sll.length).toBe(length);
+    expect(sll.isEmpty()).toBe(empty);
+    expect(String(sll)).toBe(string);
+}
 
 beforeEach(() => {
     sll = new SinglyLinkedList();
@@ -18,7 +18,6 @@ beforeEach(() => {
 describe("Constructor", () => {
     test("should create empty linked list", () => {
         checkStates({
-            obj: sll,
             head: "null",
             tail: "null",
             length: 0,
@@ -32,7 +31,6 @@ describe("Push", () => {
     it("should push if list is empty", () => {
         sll.push(5);
         checkStates({
-            obj: sll,
             head: "Node(5) > ",
             tail: "Node(5) > ",
             length: 1,
@@ -45,7 +43,6 @@ describe("Push", () => {
         sll.push(true);
         sll.push("ABC")
         checkStates({
-            obj: sll,
             head: "Node(7) > ",
             tail: "Node(ABC) > ",
             length: 3,
@@ -61,7 +58,6 @@ describe("Shift", () => {
             sll.shift();
         }).toThrow();
         checkStates({
-            obj: sll,
             head: "null",
             tail: "null",
             length: 0,
@@ -73,7 +69,6 @@ describe("Shift", () => {
         sll.push(4);
         sll.shift();
         checkStates({
-            obj: sll,
             head: "null",
             tail: "null",
             length: 0,
@@ -86,7 +81,6 @@ describe("Shift", () => {
         sll.push(true);
         sll.shift();
         checkStates({
-            obj: sll,
             head: "Node(true) > ",
             tail: "Node(true) > ",
             length: 1,
@@ -100,7 +94,6 @@ describe("Unshift", () => {
     it("should unshift if the list is empty", () => {
         sll.unshift(true);
         checkStates({
-            obj: sll,
             head: "Node(true) > ",
             tail: "Node(true) > ",
             length: 1,
@@ -113,7 +106,6 @@ describe("Unshift", () => {
         sll.push(8);
         sll.unshift(new SinglyLinkedNode(1));
         checkStates({
-            obj: sll,
             head: "Node(Node(1) > ) > ",
             tail: "Node(8) > ",
             length: 3,
@@ -129,7 +121,6 @@ describe("Pop", () => {
             sll.pop();
         }).toThrow();
         checkStates({
-            obj: sll,
             head: "null",
             tail: "null",
             length: 0,
@@ -141,7 +132,6 @@ describe("Pop", () => {
         sll.push(5);
         sll.pop();
         checkStates({
-            obj: sll,
             head: "null",
             tail: "null",
             length: 0,
@@ -155,7 +145,6 @@ describe("Pop", () => {
         sll.unshift(null);
         sll.pop();
         checkStates({
-            obj: sll,
             head: "Node(null) > ",
             tail: "Node(false) > ",
             length: 2,
@@ -178,7 +167,6 @@ describe("Delete", () => {
             sll.delete(4);
         }).toThrow();
         checkStates({
-            obj: sll,
             head: "null",
             tail: "null",
             length: 0,
@@ -191,7 +179,6 @@ describe("Delete", () => {
             sll.delete(true);
         }).toThrow();
         checkStates({
-            obj: sll,
             head: "Node(null) > ",
             tail: "Node(undefined) > ",
             length: 3,
@@ -202,7 +189,6 @@ describe("Delete", () => {
     it("should delete the head", () => {
         sll.delete(null);
         checkStates({
-            obj: sll,
             head: "Node(false) > ",
             tail: "Node(undefined) > ",
             length: 2,
@@ -213,7 +199,6 @@ describe("Delete", () => {
     it("should delete the tail", () => {
         sll.delete(undefined);
         checkStates({
-            obj: sll,
             head: "Node(null) > ",
             tail: "Node(false) > ",
             length: 2,
@@ -224,7 +209,6 @@ describe("Delete", () => {
     it("should delete a node different from head and tail", () => {
         sll.delete(false);
         checkStates({
-            obj: sll,
             head: "Node(null) > ",
             tail: "Node(undefined) > ",
             length: 2,
@@ -301,7 +285,6 @@ describe("Update", () => {
             sll.update(8, true);
         }).toThrow();
         checkStates({
-            obj: sll,
             head: "null",
             tail: "null",
             length: 0,
@@ -314,7 +297,6 @@ describe("Update", () => {
             sll.update(8, true);
         }).toThrow();
         checkStates({
-            obj: sll,
             head: "Node(10) > ",
             tail: "Node(false) > ",
             length: 3,
@@ -325,7 +307,6 @@ describe("Update", () => {
     it("should update the head", () => {
         sll.update(10, false)
         checkStates({
-            obj: sll,
             head: "Node(false) > ",
             tail: "Node(false) > ",
             length: 3,
@@ -336,7 +317,6 @@ describe("Update", () => {
     it("should update the tail", () => {
         sll.update(false, "HI");
         checkStates({
-            obj: sll,
             head: "Node(10) > ",
             tail: "Node(HI) > ",
             length: 3,
@@ -347,7 +327,6 @@ describe("Update", () => {
     it("should update if the old value is not in the head or tail", () => {
         sll.update(null, 321)
         checkStates({
-            obj: sll,
             head: "Node(10) > ",
             tail: "Node(false) > ",
             length: 3,
@@ -363,7 +342,6 @@ describe("Extend", () => {
             sll.extend(new DoublyLinkedList());
         }).toThrow();
         checkStates({
-            obj: sll,
             head: "null",
             tail: "null",
             length: 0,
@@ -377,7 +355,6 @@ describe("Extend", () => {
         newSll.push(true);
         sll.extend(newSll);
         checkStates({
-            obj: sll,
             head: "Node(8) > ",
             tail: "Node(true) > ",
             length: 2,
@@ -390,7 +367,6 @@ describe("Extend", () => {
         sll.push(true);
         sll.extend(new SinglyLinkedList());
         checkStates({
-            obj: sll,
             head: "Node(8) > ",
             tail: "Node(true) > ",
             length: 2,
@@ -406,7 +382,6 @@ describe("Extend", () => {
         sll.push(null);
         sll.extend(newSll);
         checkStates({
-            obj: sll,
             head: "Node(0) > ",
             tail: "Node(true) > ",
             length: 4,
@@ -420,7 +395,6 @@ describe("Clear", () => {
     it("should clear if the list is empty", () => {
         sll.clear();
         checkStates({
-            obj: sll,
             head: "null",
             tail: "null",
             length: 0,
@@ -434,7 +408,6 @@ describe("Clear", () => {
         sll.push(NaN);
         sll.clear();
         checkStates({
-            obj: sll,
             head: "null",
             tail: "null",
             length: 0,
