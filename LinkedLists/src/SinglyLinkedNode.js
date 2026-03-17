@@ -19,7 +19,7 @@ export default class SinglyLinkedNode {
         return this._next;
     }
     set next(newNext) {
-        if (newNext !== null && (newNext?.constructor !== this.constructor)) {
+        if (newNext !== null && (newNext.constructor !== this.constructor)) {
             throw new Error(`The value should be instance of ${this.constructor.name} or should be null.`);
         }
         this._next = newNext;

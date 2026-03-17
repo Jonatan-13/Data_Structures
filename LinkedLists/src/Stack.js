@@ -1,35 +1,47 @@
-import AbstractList from "./AbstractList";
-import DoublyLinkedList from "./DoublyLinkedList";
+import SinglyLinkedList from "./SinglyLinkedList";
 
-export default class Stack extends AbstractList {
+export default class Stack {
     constructor() {
-        super(DoublyLinkedList);
+        this._list = new SinglyLinkedList();
+    }
+
+    toString() {
+        let values = [];
+        let node = this.head;
+        while (node != null) {
+            values.push(node.value);
+            node = node.next;
+        }
+        return `Stack(${values.join(", ")})`;
+    }
+
+    get size() {
+        return this._list.length;
+    }
+
+    peek() {
+        let tail = this._list.tail;
+        if (tail != null) tail = tail.value;
+        return tail;
+    }
+
+    isEmpty() {
+        return this._list.isEmpty();
+    }
+
+    clear() {
+        this._list.clear();
     }
 
     push(value) {
-        let node = new this.nodeConstructor(value);
-        if (this.isEmpty()) {
-            this._head = node;
-            this._tail = node;
-        } else {
-            this.tail.next = node;
-            node.previous = this.tail; // ----------
-            this._tail = node;
-        }
-        this._length++;
+        this._list.push(value);
     }
 
     pop() {
         if (!this.isEmpty()) {
-            if (this.length === 1) {
-                this.clear();
-            } else {
-                this._tail = this.tail.previous;
-                this.tail.next = null;
-                this._length--;
-            }
+            this._list.pop();
         } else {
-            throw new Error("Cannot pop if the linked list is empty.");
+            throw new Error("Cannot pop if the stack is empty.");
         }
     }
 }

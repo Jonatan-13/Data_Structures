@@ -1,35 +1,58 @@
-import AbstractList from "./AbstractList";
-import DoublyLinkedList from "./DoublyLinkedList";
+import SinglyLinkedList from "./SinglyLinkedList";
 
-export default class Queue extends AbstractList {
+export default class Queue {
     constructor() {
-        super(DoublyLinkedList);
+        this._list = new SinglyLinkedList();
+    }
+
+    toString() {
+        let values = [];
+        let node = this.head;
+        while (node != null) {
+            values.push(node.value);
+            node = node.next;
+        }
+        return `Queue(${values.join(", ")})`;
+    }
+
+    get size() {
+        return this._list.length;
+    }
+
+    peek() {
+        let head = this._list.head;
+        if (head != null) head = head.value;
+        return head;
+    }
+
+    isEmpty() {
+        return this._list.isEmpty();
+    }
+
+    clear() {
+        this._list.clear();
+    }
+
+    extend(queue) {
+        if (queue?.constructor !== this.constructor) {
+            throw new Error(`Can only extend a queue, not other data structure.`);   
+        }
+        while (!queue.isEmpty()) {
+            this.enqueue(queue.dequeue());
+        }
     }
 
     enqueue(value) {
-        let node = new this.nodeConstructor(value);
-        if (this.isEmpty()) {
-            this._head = node;
-            this._tail = node;
-        } else {
-            this.tail.next = node;
-            node.previous = this.tail; // ----------
-            this._tail = node;
-        }
-        this._length++;
+        this._list.push(value);
     }
 
     dequeue() {
         if (!this.isEmpty()) {
-            if (this.length === 1) {
-                this.clear();
-            } else {
-                this._head = this.head.next;
-                this.head.previous = null;
-                this._length--;
-            }
+            let deletedNode = this.peek();
+            this._list.shift();
+            return deletedNode;
         } else {
-            throw new Error("Cannot shfit if the linked list is empty.");
+            throw new Error("Cannot dequeue if the queue is empty.");
         }
     }
 }
